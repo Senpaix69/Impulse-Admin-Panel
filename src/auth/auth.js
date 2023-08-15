@@ -9,31 +9,23 @@ const useAuth = () => {
 
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const userData = {
-        email: result.user.email,
-        name: result.user.displayName,
-        emailVerified: result.user.emailVerified,
-        phone: result.user.phoneNumber,
-        profileUrl: result.user.photoURL,
-        uid: result.user.uid,
-      };
-      localStorage.setItem("user", JSON.stringify(userData));
-      setUser(userData);
-    } catch (error) {
-      console.log(error);
-    }
+    const result = await signInWithPopup(auth, provider);
+    const userData = {
+      email: result.user.email,
+      name: result.user.displayName,
+      emailVerified: result.user.emailVerified,
+      phone: result.user.phoneNumber,
+      profileUrl: result.user.photoURL,
+      uid: result.user.uid,
+    };
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
   };
 
   const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      localStorage.removeItem("user");
-      setUser(null);
-    } catch (error) {
-      console.log(error);
-    }
+    await signOut(auth);
+    localStorage.removeItem("user");
+    setUser(null);
   };
 
   return { user, handleSignIn, handleSignOut };
