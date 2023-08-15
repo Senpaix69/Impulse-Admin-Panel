@@ -26,7 +26,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
         </svg>
       </div>
       <div
-        className={`absolute z-20 md:relative transition-all duration-300 md:translate-x-0 w-[25%] h-full mr-1 ${
+        className={`absolute overflow-hidden z-20 md:relative transition-all duration-300 md:translate-x-0 w-[25%] h-full mr-1 ${
           menu ? "translate-x-0 w-[70%]" : "-translate-x-full"
         }`}
       >
