@@ -1,7 +1,6 @@
 import React from "react";
 
 const ConfirmDialog = ({ showModal, confirm, cancel }) => {
-  
   return (
     <div>
       {showModal && (
