@@ -10,7 +10,7 @@ const Dashboard = ({ user }) => {
       <div className="bg-white m-auto p-4 rounded-md flex flex-col mt-[10%]">
         <img
           className="m-auto rounded-full p-[1.4px] h-24 border-2 border-red-800"
-          src={user.profileUrl}
+          src={user.downloadableProfileUrl}
           alt="profileImg"
         />
         <div className="mt-4 text-center">

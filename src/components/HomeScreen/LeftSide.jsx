@@ -1,20 +1,9 @@
-import React, { useState } from "react";
-import ConfirmDialog from "../common/ConfirmDialog";
+import React from "react";
 import appLogo from "../../assets/images/app_logo.png";
 import { Link, useLocation } from "react-router-dom";
 
-const LeftSide = ({ handleSignOut }) => {
-  const [isSignOut, setIsSignOut] = useState(false);
+const LeftSide = ({ setIsSignOut }) => {
   const location = useLocation();
-
-  const confirmSignOut = () => {
-    setIsSignOut(false);
-    handleSignOut();
-  };
-
-  const cancelSignOut = () => {
-    setIsSignOut(false);
-  };
 
   return (
     <div className="h-full w-full pt-4 px-2 bg-white shadow-md flex flex-col gap-4">
@@ -70,12 +59,6 @@ const LeftSide = ({ handleSignOut }) => {
       >
         Logout
       </button>
-
-      <ConfirmDialog
-        confirm={confirmSignOut}
-        cancel={cancelSignOut}
-        showModal={isSignOut}
-      />
     </div>
   );
 };

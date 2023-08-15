@@ -14,7 +14,7 @@ const Login = ({ handleSignIn }) => {
         <div className="md:m-4 mt-20 h-24 w-24 bg-white flex items-center content-center rounded-lg">
           <img src={appLogo} alt="appLogo" />
         </div>
-        <h1 className="md:my-4 font-bold text-lg md:text-xl text-white">
+        <h1 className="md:my-4 font-bold text-lg md:text-5xl text-white">
           Impulse
         </h1>
       </div>
