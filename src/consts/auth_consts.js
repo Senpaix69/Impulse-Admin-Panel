@@ -1,5 +1,5 @@
 const herokuAddr = "https://impulse-senpai-e6a2f49e21ab.herokuapp.com";
 const myAPI = "http://localhost:5000";
-const host = herokuAddr;
+const host = myAPI;
 
 export default host;

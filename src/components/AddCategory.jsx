@@ -28,7 +28,9 @@ const AddCategory = () => {
         <div className="h-40 w-40 rounded-lg overflow-hidden shadow-md">
           <img src={placeHolder} alt="placeHolder" />
         </div>
-        <button className="w-40 py-2 mt-2 bg-red-800 rounded-md text-white">Add Image</button>
+        <button className="w-40 py-2 mt-2 bg-red-800 rounded-md text-white">
+          Add Image
+        </button>
       </div>
 
       {loading && <Loader />}
