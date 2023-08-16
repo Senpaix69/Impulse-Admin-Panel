@@ -36,7 +36,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
         className={`rounded-full transition-all duration-300 left-3 p-2 md:hidden absolute z-30 cursor-pointer ${
           menu
             ? "translate-y-5 text-white bg-red-800"
-            : "translate-y-[5px] bg-white"
+            : "translate-y-[3px] bg-white"
         } ${location.pathname === "/addCategory" ? "hidden" : ""}`}
       >
         <svg

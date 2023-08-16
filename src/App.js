@@ -6,7 +6,7 @@ import HomeScreen from "./components/HomeScreen/HomeScreen";
 import CategoryScreen from "./components/CategoryScreen";
 import ProductScreen from "./components/ProductScreen";
 import Dashboard from "./components/Dashboard";
-import useAuth from "./auth/auth";
+import useAuth from "./api/auth";
 import AddCategory from "./components/AddCategory";
 
 function App() {

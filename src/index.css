@@ -8,3 +8,9 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
+input {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+}
