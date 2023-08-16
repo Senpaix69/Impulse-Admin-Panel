@@ -6,7 +6,7 @@ const LeftSide = ({ setIsSignOut }) => {
   const location = useLocation();
 
   return (
-    <div className="h-full w-full pt-4 px-2 bg-white shadow-md flex flex-col gap-4">
+    <div className="h-full w-full p-2 pt-4 bg-white shadow-md flex flex-col gap-4">
       <div className="flex items-center border-b justify-center border-gray-200 pb-4">
         <img
           className="w-12 h-12 rounded-full p-[1.4px] border-2 border-red-800"

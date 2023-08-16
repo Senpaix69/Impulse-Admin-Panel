@@ -13,7 +13,7 @@ function App() {
   const { user, handleSignIn, handleSignOut } = useAuth();
 
   return (
-    <div className="m-auto w-full min-w-[400px] md:w-[1000px] h-screen">
+    <div className="m-auto w-full min-w-[350px] md:w-[1000px] h-screen">
       {user ? (
         <Router>
           <Routes>
