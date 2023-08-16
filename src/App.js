@@ -7,6 +7,7 @@ import CategoryScreen from "./components/CategoryScreen";
 import ProductScreen from "./components/ProductScreen";
 import Dashboard from "./components/Dashboard";
 import useAuth from "./auth/auth";
+import AddCategory from "./components/AddCategory";
 
 function App() {
   const { user, handleSignIn, handleSignOut } = useAuth();
@@ -43,6 +44,16 @@ function App() {
                   handleSignOut={handleSignOut}
                   user={user}
                   RightScreen={CategoryScreen}
+                />
+              }
+            />
+            <Route
+              path="/addCategory"
+              element={
+                <HomeScreen
+                  handleSignOut={handleSignOut}
+                  user={user}
+                  RightScreen={AddCategory}
                 />
               }
             />

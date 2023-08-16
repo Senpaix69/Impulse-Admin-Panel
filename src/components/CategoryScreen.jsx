@@ -3,7 +3,8 @@ import axios from "axios";
 import emptyImg from "../assets/images/nothing.png";
 import addImg from "../assets/images/add.png";
 import Loader from "./common/Loader";
-import { herokuAddr } from "../consts/auth_consts";
+import host from "../consts/auth_consts";
+import { Link } from "react-router-dom";
 
 const CategoryScreen = () => {
   const [categories, setCategories] = useState([]);
@@ -12,7 +13,7 @@ const CategoryScreen = () => {
   const getCategories = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${herokuAddr}/api/getAllCategories`);
+      const res = await axios.get(`${host}/api/getAllCategories`);
       if (res.status === 200) {
         setCategories(res.data);
       }
@@ -31,11 +32,13 @@ const CategoryScreen = () => {
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
       <div className="absolute top-0 bg-red-800 w-full p-2 flex item-center justify-between text-2xl font-bold text-white">
         <p className="ml-12 md:ml-0">Categories</p>
-        <img
-          className="p-2 h-8 bg-white rounded-full cursor-pointer"
-          src={addImg}
-          alt="catImage"
-        />
+        <Link to="/addCategory">
+          <img
+            className="p-2 h-8 bg-white rounded-full cursor-pointer"
+            src={addImg}
+            alt="catImage"
+          />
+        </Link>
       </div>
 
       {loading && <Loader />}

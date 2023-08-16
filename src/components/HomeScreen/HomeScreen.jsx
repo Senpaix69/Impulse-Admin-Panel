@@ -33,16 +33,18 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
       )}
       <div
         onClick={() => setMenu(!menu)}
-        className={`bg-white rounded-full transition-all duration-300 left-3 p-2 md:hidden absolute z-30 cursor-pointer ${
-          menu ? "translate-y-5" : "translate-y-[4px]"
-        }`}
+        className={`rounded-full transition-all duration-300 left-3 p-2 md:hidden absolute z-30 cursor-pointer ${
+          menu
+            ? "translate-y-5 text-white bg-red-800"
+            : "translate-y-[5px] bg-white"
+        } ${location.pathname === "/addCategory" ? "hidden" : ""}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          className="h-6 w-6"
+          className="h-5 w-5"
         >
           <path
             strokeLinecap="round"

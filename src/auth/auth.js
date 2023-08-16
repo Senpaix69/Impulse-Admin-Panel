@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import axios from "axios";
 import { auth } from "../firebase";
-import { herokuAddr } from "../consts/auth_consts";
+import host from "../consts/auth_consts";
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -13,9 +13,7 @@ const useAuth = () => {
   const getUserData = async () => {
     try {
       if (user === null) {
-        const res = await axios.get(
-          `${herokuAddr}/api/getUser/${dbUser.email}`
-        );
+        const res = await axios.get(`${host}/api/getUser/${dbUser.email}`);
         if (res.status === 200) {
           setUser(res.data);
         }
