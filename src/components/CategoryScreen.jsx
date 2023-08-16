@@ -46,7 +46,7 @@ const CategoryScreen = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 mt-10 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 mt-10 gap-4 px-2">
         {categories.map((category, index) => {
           return (
             <div

@@ -24,7 +24,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
   };
 
   return (
-    <div className="flex h-screen w-full relative">
+    <div className="flex h-screen overflow-hidden w-full relative">
       {menu && (
         <div
           onClick={() => setMenu(false)}
@@ -53,7 +53,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
         </svg>
       </div>
       <div
-        className={`absolute overflow-hidden z-20 md:relative transition-all duration-300 md:translate-x-0 w-[25%] h-full mr-1 ${
+        className={`absolute z-20 md:relative transition-all duration-300 md:translate-x-0 w-[25%] h-full mr-1 ${
           menu ? "translate-x-0 w-[70%]" : "-translate-x-full"
         }`}
       >
