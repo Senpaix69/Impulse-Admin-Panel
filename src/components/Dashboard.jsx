@@ -9,7 +9,7 @@ const Dashboard = ({ user }) => {
       </div>
       <div className="bg-white m-auto p-4 rounded-md flex flex-col mt-[10%]">
         <img
-          className="m-auto rounded-full p-[1.4px] h-24 border-2 border-red-800"
+          className="m-auto rounded-full p-[1.4px] h-24 w-24 border-2 border-red-800"
           src={user.downloadableProfileUrl}
           alt="profileImg"
         />
