@@ -31,7 +31,7 @@ const CategoryScreen = () => {
 
   return (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
-      <div className="absolute top-0 bg-red-800 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
+      <div className="absolute top-0 bg-red-800 z-10 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
         <p className="ml-12 md:ml-0">Categories</p>
         <Link to="/addCategory">
           <img

@@ -29,17 +29,35 @@ const useAuth = () => {
 
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const userData = {
-      email: result.user.email,
-      name: result.user.displayName,
-      emailVerified: result.user.emailVerified,
-      phone: result.user.phoneNumber,
-      profileUrl: result.user.photoURL,
-      uid: result.user.uid,
-    };
-    localStorage.setItem("user", JSON.stringify(userData));
-    setDbUser(userData);
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const userData = {
+        email: result.user.email,
+        name: result.user.displayName,
+        emailVerified: result.user.emailVerified,
+        phone: result.user.phoneNumber,
+        profileUrl: result.user.photoURL,
+        uid: result.user.uid,
+      };
+      console.log(userData);
+
+      await axios.post(`${host}/api/signUp`, {
+        user: {
+          name: userData.name,
+          email: userData.email,
+          password: userData.uid,
+          phone: userData.phone,
+          downloadableProfileUrl: userData.profileUrl,
+        },
+        method: 1,
+      });
+
+      localStorage.setItem("user", JSON.stringify(userData));
+      setDbUser(userData);
+    } catch (error) {
+      console.error("Error signing in:", error);
+    }
   };
 
   const handleSignOut = async () => {
