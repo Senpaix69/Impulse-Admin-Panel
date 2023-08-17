@@ -5,13 +5,18 @@ import addImg from "../assets/images/add.png";
 import edit from "../assets/images/edit.png";
 import Loader from "./common/Loader";
 import host from "../consts/auth_consts";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AddCategory from "./AddCategory";
 
 const CategoryScreen = ({ user }) => {
   const [categories, setCategories] = useState([]);
   const [editCategory, setEditCategory] = useState(null);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/category") setEditCategory(null);
+  }, [location.pathname]);
 
   const getCategories = async () => {
     try {
@@ -39,7 +44,7 @@ const CategoryScreen = ({ user }) => {
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
       <div className="absolute top-0 bg-red-800 z-10 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
         <p className="ml-12 md:ml-0">Categories</p>
-        <Link to="/addCategory">
+        <Link to="/addCategory" replace>
           <img
             className="p-2 h-8 bg-white rounded-full cursor-pointer"
             src={addImg}
@@ -69,15 +74,15 @@ const CategoryScreen = ({ user }) => {
                 alt="categoryImage"
               />
               <p className="text-xs md:text-sm">{category.title}</p>
-              <Link
-                to="/addCategory"
+              <button
                 onClick={() => {
                   setEditCategory(category);
+                  location.pathname = "/addCategory";
                 }}
                 className="absolute top-2 right-2"
               >
                 <img className="h-5" src={edit} alt="edit" />
-              </Link>
+              </button>
             </div>
           );
         })}

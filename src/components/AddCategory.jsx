@@ -9,7 +9,7 @@ import ConfirmDialog from "./common/ConfirmDialog";
 import { equalArrays } from "../utils";
 import { Link } from "react-router-dom";
 
-const AddCategory = ({ user, goBack, category }) => {
+const AddCategory = ({ user, category }) => {
   const [catTitle, setCatTitle] = useState("");
   const [catImage, setCatImage] = useState(null);
   const [subCat, setSubCat] = useState("");
@@ -58,7 +58,6 @@ const AddCategory = ({ user, goBack, category }) => {
       });
       if (response.status === 200) {
         backRef.current.click();
-        goBack(false);
       }
     } catch (e) {
       alert(e.message);
@@ -128,8 +127,6 @@ const AddCategory = ({ user, goBack, category }) => {
       if (response.status !== 200) {
         throw new Error(response.data);
       }
-
-      if (goBack) goBack();
       backRef.current.click();
     } catch (error) {
       alert(`Error: ${error.message}`);
@@ -147,6 +144,7 @@ const AddCategory = ({ user, goBack, category }) => {
             to="/category"
             className={loading ? "hidden" : ""}
             ref={backRef}
+            replace
           >
             <img
               className="p-2 h-8 bg-white rounded-full cursor-pointer"
