@@ -13,7 +13,7 @@ import {
   UPDATE_CATEGORY,
 } from "../consts/api_consts";
 
-const AddCategory = ({ user, category, setAdding }) => {
+const AddProduct = ({ user, category, setAdding }) => {
   const [catTitle, setCatTitle] = useState("");
   const [catImage, setCatImage] = useState(null);
   const [subCat, setSubCat] = useState("");
@@ -278,4 +278,4 @@ const AddCategory = ({ user, category, setAdding }) => {
   );
 };
 
-export default AddCategory;
+export default AddProduct;

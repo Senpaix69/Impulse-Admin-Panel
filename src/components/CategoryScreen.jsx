@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import emptyImg from "../assets/images/nothing.png";
 import addImg from "../assets/images/add.png";
-import edit from "../assets/images/edit.png";
 import Loader from "./common/Loader";
 import host from "../consts/auth_consts";
+import { GET_ALL_CATEGORIES } from "../consts/api_consts";
 import AddCategory from "./AddCategory";
 
 const CategoryScreen = ({ user, setAdding, adding }) => {
@@ -23,7 +23,7 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
   const getCategories = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${host}/api/getAllCategories`);
+      const res = await axios.get(`${host}${GET_ALL_CATEGORIES}`);
       if (res.status === 200) {
         setCategories(res.data);
       }
