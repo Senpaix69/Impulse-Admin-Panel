@@ -8,13 +8,16 @@ import ProductScreen from "./components/ProductScreen";
 import Dashboard from "./components/Dashboard";
 import useAuth from "./api/auth";
 import AddCategory from "./components/AddCategory";
+import Loader from "./components/common/Loader";
 
 function App() {
-  const { user, handleSignIn, handleSignOut } = useAuth();
+  const { loading, user, handleSignIn, handleSignOut } = useAuth();
 
   return (
     <div className="m-auto w-full min-w-[350px] md:w-[1000px] h-screen">
-      {user ? (
+      {loading ? (
+        <Loader />
+      ) : user ? (
         <Router>
           <Routes>
             <Route

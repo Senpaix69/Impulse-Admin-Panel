@@ -1,19 +1,26 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import back from "../assets/images/arrow.png";
 import placeHolder from "../assets/images/placeholder.png";
-import { uploadFile } from "../api/firebase_service";
+import deleteImg from "../assets/images/trash.png";
+import { uploadFile, deleteImage } from "../api/firebase_service";
 import axios from "axios";
 import host from "../consts/auth_consts";
+import ConfirmDialog from "./common/ConfirmDialog";
+import { equalArrays } from "../utils";
+import { Link } from "react-router-dom";
 
-const AddCategory = ({ user }) => {
+const AddCategory = ({ user, goBack, category }) => {
   const [catTitle, setCatTitle] = useState("");
   const [catImage, setCatImage] = useState(null);
   const [subCat, setSubCat] = useState("");
   const [loading, setLoading] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [pageTitle, setPageTitle] = useState("Add Category");
   const [subCategories, setSubCategories] = useState([]);
   const [status, setStatus] = useState(null);
+  const [showDelete, setShowDelete] = useState(false);
   const ref = useRef();
+  const backRef = useRef();
 
   const addSubCategory = () => {
     if (subCat.length > 0) {
@@ -27,12 +34,57 @@ const AddCategory = ({ user }) => {
     setSubCategories(filtered);
   };
 
-  const goBackAndReplace = (newUrl) => {
-    window.history.go(-1);
-    window.history.replaceState(null, "", newUrl);
+  useEffect(() => {
+    if (category) {
+      setPageTitle("Edit Category");
+      setCatImage(category.imageUrl);
+      setCatTitle(category.title);
+      setSubCategories(category.subcategories);
+    }
+  }, [category]);
+
+  useEffect(() => {
+    checkIsEditing();
+  }, [catTitle, catImage, subCategories]);
+
+  const deleteCategory = async () => {
+    setShowDelete(false);
+    try {
+      setLoading(true);
+      setPageTitle("Deleting Category...");
+      await deleteImage(category.imageUrl);
+      const response = await axios.post(`${host}/api/deleteCategory`, {
+        _id: category._id,
+      });
+      if (response.status === 200) {
+        backRef.current.click();
+        goBack(false);
+      }
+    } catch (e) {
+      alert(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const checkIsEditing = () => {
+    if (
+      category &&
+      equalArrays(subCategories, category.subcategories) &&
+      catTitle === category.title &&
+      catImage === category.imageUrl
+    ) {
+      if (isEditing) setIsEditing(false);
+      return;
+    }
+    if (!isEditing) setIsEditing(true);
   };
 
   const saveCategory = async () => {
+    if (!isEditing) {
+      return;
+    }
+
     try {
       if (!catTitle) {
         throw new Error("Category title is required");
@@ -43,31 +95,46 @@ const AddCategory = ({ user }) => {
       }
 
       setLoading(true);
+      setPageTitle("Saving Category...");
 
-      const imageUrl = await uploadFile(
-        catImage,
-        `categories/${user._id}/${catImage.name}`,
-        setStatus
+      let imageUrl;
+      if (!category || catImage !== category?.imageUrl) {
+        const uploadResult = await uploadFile(
+          catImage,
+          `categories/${user._id}/${catImage.name}`,
+          setStatus
+        );
+        if (!uploadResult.url) {
+          throw new Error(uploadResult.error);
+        }
+        imageUrl = uploadResult.url;
+      } else {
+        imageUrl = category.imageUrl;
+      }
+
+      const requestData = {
+        _id: category?._id ?? null,
+        adminId: user._id,
+        imageUrl,
+        title: catTitle,
+        subcategories: subCategories,
+      };
+
+      const response = await axios.post(
+        `${host}/api/${category ? "update" : "add"}Category`,
+        requestData
       );
 
-      if (imageUrl.url) {
-        const response = await axios.post(`${host}/api/addCategory`, {
-          adminId: user._id,
-          imageUrl: imageUrl.url,
-          title: catTitle,
-          subcategories: subCategories,
-        });
-
-        if (response.status !== 200) {
-          throw new Error(response.data);
-        }
-        goBackAndReplace("/category");
-      } else {
-        throw new Error(imageUrl.error);
+      if (response.status !== 200) {
+        throw new Error(response.data);
       }
+
+      if (goBack) goBack();
+      backRef.current.click();
     } catch (error) {
       alert(`Error: ${error.message}`);
     } finally {
+      setPageTitle(category ? "Edit Category" : "Add Category");
       setLoading(false);
     }
   };
@@ -76,31 +143,52 @@ const AddCategory = ({ user }) => {
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
       <div className="absolute top-0 bg-red-800 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
         <div className="flex items-center">
-          <Link className={loading ? "hidden" : ""} to="/category" replace>
+          <Link
+            to="/category"
+            className={loading ? "hidden" : ""}
+            ref={backRef}
+          >
             <img
               className="p-2 h-8 bg-white rounded-full cursor-pointer"
               src={back}
               alt="arrow"
             />
           </Link>
-          <p className="ml-2">
-            {loading ? "Saving Category..." : "Add Category"}
-          </p>
+          <p className="ml-2">{pageTitle}</p>
         </div>
-        <button
-          disabled={loading}
-          onClick={saveCategory}
-          className="py-1 w-20 bg-white rounded-md flex items-center justify-center gap-2 text-red-800 text-xs"
-        >
-          {loading ? (
-            <>
-              <p>{status}%</p>
-              <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-red-800"></div>
-            </>
-          ) : (
-            "Save"
+
+        {/* Actions */}
+        <div className="flex gap-1 items-center">
+          {category && (
+            <button
+              onClick={() => setShowDelete(true)}
+              disabled={loading}
+              className="p-1 bg-white h-8 w-8 rounded-full flex items-center justify-center gap-2 text-red-800 text-xs"
+            >
+              {loading ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-red-800"></div>
+              ) : (
+                <img className="h-5" src={deleteImg} alt="delete" />
+              )}
+            </button>
           )}
-        </button>
+          {isEditing && (
+            <button
+              disabled={loading}
+              onClick={saveCategory}
+              className="py-1 h-8 w-20 bg-white rounded-md flex items-center justify-center gap-2 text-red-800 text-xs"
+            >
+              {!category && loading ? (
+                <>
+                  <p>{status}%</p>
+                  <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-red-800"></div>
+                </>
+              ) : (
+                "Save"
+              )}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Category Form */}
@@ -114,7 +202,13 @@ const AddCategory = ({ user }) => {
         />
         <div className="flex items-center justify-center w-52 h-52 rounded-lg overflow-hidden shadow-md">
           <img
-            src={catImage ? URL.createObjectURL(catImage) : placeHolder}
+            src={
+              catImage
+                ? category
+                  ? catImage
+                  : URL.createObjectURL(catImage)
+                : placeHolder
+            }
             alt="placeHolder"
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
@@ -173,6 +267,12 @@ const AddCategory = ({ user }) => {
           ))}
         </div>
       </div>
+      <ConfirmDialog
+        message={"Delete this category?"}
+        showModal={showDelete}
+        confirm={deleteCategory}
+        cancel={() => setShowDelete(false)}
+      />
     </div>
   );
 };

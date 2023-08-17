@@ -1,12 +1,12 @@
 import React from "react";
 
-const ConfirmDialog = ({ showModal, confirm, cancel }) => {
+const ConfirmDialog = ({ showModal, confirm, cancel, message }) => {
   return (
     <div>
       {showModal && (
         <div className="fixed h-screen w-full z-50 bg-black bg-opacity-20 inset-0 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-md">
-            <p className="mb-4">Are you sure you want to sign out?</p>
+            <p className="mb-4">{message}</p>
             <div className="flex gap-2">
               <button
                 onClick={confirm}

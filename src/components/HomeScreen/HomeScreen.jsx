@@ -70,6 +70,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
         confirm={confirmSignOut}
         cancel={cancelSignOut}
         showModal={isSignOut}
+        message={"Are you sure you want to sign out?"}
       />
     </div>
   );

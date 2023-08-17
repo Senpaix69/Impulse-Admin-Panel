@@ -6,6 +6,7 @@ import host from "../consts/auth_consts";
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [dbUser, setDbUser] = useState(
     JSON.parse(localStorage.getItem("user") ?? null)
   );
@@ -13,6 +14,7 @@ const useAuth = () => {
   const getUserData = async () => {
     try {
       if (user === null) {
+        setLoading(true);
         const res = await axios.get(`${host}/api/getUser/${dbUser.email}`);
         if (res.status === 200) {
           setUser(res.data);
@@ -20,6 +22,8 @@ const useAuth = () => {
       }
     } catch (e) {
       console.log(e.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,6 +36,7 @@ const useAuth = () => {
 
     try {
       const result = await signInWithPopup(auth, provider);
+      setLoading(true);
       const userData = {
         email: result.user.email,
         name: result.user.displayName,
@@ -40,7 +45,6 @@ const useAuth = () => {
         profileUrl: result.user.photoURL,
         uid: result.user.uid,
       };
-      console.log(userData);
 
       await axios.post(`${host}/api/signUp`, {
         user: {
@@ -57,6 +61,8 @@ const useAuth = () => {
       setDbUser(userData);
     } catch (error) {
       console.error("Error signing in:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,7 +72,7 @@ const useAuth = () => {
     setUser(null);
   };
 
-  return { user, handleSignIn, handleSignOut };
+  return { user, handleSignIn, handleSignOut, loading };
 };
 
 export default useAuth;

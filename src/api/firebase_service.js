@@ -1,6 +1,11 @@
 import Compressor from "image-compressor.js";
 import { storage } from "../firebase";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import {
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+  deleteObject,
+} from "firebase/storage";
 
 const uploadFile = async (file, path, setStatus) => {
   try {
@@ -30,7 +35,16 @@ const uploadFile = async (file, path, setStatus) => {
       );
     });
   } catch (error) {
-    throw { error };
+    throw new Error(error.message);
+  }
+};
+
+const deleteImage = async (imageUrl) => {
+  const imageRef = ref(storage, imageUrl);
+  try {
+    await deleteObject(imageRef);
+  } catch (error) {
+    throw new Error("Could not delete image");
   }
 };
 
@@ -53,4 +67,4 @@ const compressFile = async (file) => {
   }
 };
 
-export { compressFile, uploadFile };
+export { compressFile, uploadFile, deleteImage };
