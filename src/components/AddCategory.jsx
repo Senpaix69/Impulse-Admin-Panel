@@ -7,9 +7,8 @@ import axios from "axios";
 import host from "../consts/auth_consts";
 import ConfirmDialog from "./common/ConfirmDialog";
 import { equalArrays } from "../utils";
-import { Link } from "react-router-dom";
 
-const AddCategory = ({ user, category }) => {
+const AddCategory = ({ user, category, setAdding }) => {
   const [catTitle, setCatTitle] = useState("");
   const [catImage, setCatImage] = useState(null);
   const [subCat, setSubCat] = useState("");
@@ -20,7 +19,6 @@ const AddCategory = ({ user, category }) => {
   const [status, setStatus] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
   const ref = useRef();
-  const backRef = useRef();
 
   const addSubCategory = () => {
     if (subCat.length > 0) {
@@ -57,7 +55,7 @@ const AddCategory = ({ user, category }) => {
         _id: category._id,
       });
       if (response.status === 200) {
-        backRef.current.click();
+        setAdding(false);
       }
     } catch (e) {
       alert(e.message);
@@ -127,7 +125,7 @@ const AddCategory = ({ user, category }) => {
       if (response.status !== 200) {
         throw new Error(response.data);
       }
-      backRef.current.click();
+      setAdding(false);
     } catch (error) {
       alert(`Error: ${error.message}`);
     } finally {
@@ -140,18 +138,16 @@ const AddCategory = ({ user, category }) => {
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
       <div className="absolute top-0 bg-red-800 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
         <div className="flex items-center">
-          <Link
-            to="/category"
+          <button
+            onClick={() => setAdding(false)}
             className={loading ? "hidden" : ""}
-            ref={backRef}
-            replace
           >
             <img
               className="p-2 h-8 bg-white rounded-full cursor-pointer"
               src={back}
               alt="arrow"
             />
-          </Link>
+          </button>
           <p className="ml-2">{pageTitle}</p>
         </div>
 

@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
   const [menu, setMenu] = useState(false);
+  const [adding, setAdding] = useState(false);
   const [isSignOut, setIsSignOut] = useState(false);
   const location = useLocation();
 
@@ -12,7 +13,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
     if (menu) {
       setMenu(false);
     }
-  }, [location]);
+  }, [location.pathname]);
 
   const confirmSignOut = () => {
     setIsSignOut(false);
@@ -37,7 +38,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
           menu
             ? "translate-y-5 text-white bg-red-800"
             : "translate-y-[3px] bg-white"
-        } ${location.pathname === "/addCategory" ? "hidden" : ""}`}
+        } ${location.pathname === "/addCategory" || adding ? "hidden" : ""}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +64,7 @@ const HomeScreen = ({ handleSignOut, user, RightScreen }) => {
       </div>
 
       <div className="flex-1 relative">
-        <RightScreen user={user} />
+        <RightScreen user={user} setAdding={setAdding} adding={adding} />
       </div>
 
       <ConfirmDialog

@@ -5,18 +5,20 @@ import addImg from "../assets/images/add.png";
 import edit from "../assets/images/edit.png";
 import Loader from "./common/Loader";
 import host from "../consts/auth_consts";
-import { Link, useLocation } from "react-router-dom";
 import AddCategory from "./AddCategory";
 
-const CategoryScreen = ({ user }) => {
+const CategoryScreen = ({ user, setAdding, adding }) => {
   const [categories, setCategories] = useState([]);
   const [editCategory, setEditCategory] = useState(null);
+  const [addCategory, setAddCategory] = useState(false);
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/category") setEditCategory(null);
-  }, [location.pathname]);
+    if (!adding) {
+      setEditCategory(null);
+      setAddCategory(false);
+    }
+  }, [adding]);
 
   const getCategories = async () => {
     try {
@@ -39,18 +41,25 @@ const CategoryScreen = ({ user }) => {
   }, [editCategory]);
 
   return editCategory ? (
-    <AddCategory user={user} goBack={setEditCategory} category={editCategory} />
+    <AddCategory user={user} category={editCategory} setAdding={setAdding} />
+  ) : addCategory ? (
+    <AddCategory user={user} setAdding={setAdding} />
   ) : (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
       <div className="absolute top-0 bg-red-800 z-10 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
         <p className="ml-12 md:ml-0">Categories</p>
-        <Link to="/addCategory" replace>
+        <button
+          onClick={() => {
+            setAddCategory(true);
+            setAdding(true);
+          }}
+        >
           <img
             className="p-2 h-8 bg-white rounded-full cursor-pointer"
             src={addImg}
             alt="category"
           />
-        </Link>
+        </button>
       </div>
 
       {loading && <Loader />}
@@ -77,7 +86,7 @@ const CategoryScreen = ({ user }) => {
               <button
                 onClick={() => {
                   setEditCategory(category);
-                  location.pathname = "/addCategory";
+                  setAdding(true);
                 }}
                 className="absolute top-2 right-2"
               >
