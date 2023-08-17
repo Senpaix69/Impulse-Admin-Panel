@@ -68,8 +68,10 @@ const AddCategory = ({ user, category, setAdding }) => {
     if (
       category &&
       equalArrays(subCategories, category.subcategories) &&
-      catTitle === category.title &&
-      catImage === category.imageUrl
+      catTitle.toLocaleLowerCase().trim() ===
+        category.title.toLocaleLowerCase().trim() &&
+      catImage.toLocaleLowerCase().trim() ===
+        category.imageUrl.toLocaleLowerCase().trim()
     ) {
       if (isEditing) setIsEditing(false);
       return;
@@ -136,14 +138,14 @@ const AddCategory = ({ user, category, setAdding }) => {
 
   return (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
-      <div className="absolute top-0 bg-red-800 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
+      <div className="absolute top-0 bg-red-800 w-full p-2 px-3 flex item-center justify-between text-xl font-bold text-white">
         <div className="flex items-center">
           <button
             onClick={() => setAdding(false)}
             className={loading ? "hidden" : ""}
           >
             <img
-              className="p-2 h-8 bg-white rounded-full cursor-pointer"
+              className="p-2 h-9 bg-white rounded-full cursor-pointer"
               src={back}
               alt="arrow"
             />
@@ -157,12 +159,12 @@ const AddCategory = ({ user, category, setAdding }) => {
             <button
               onClick={() => setShowDelete(true)}
               disabled={loading}
-              className="p-1 bg-white h-8 w-8 rounded-full flex items-center justify-center gap-2 text-red-800 text-xs"
+              className="p-1 bg-white h-9 w-9 rounded-full flex items-center justify-center gap-2 text-red-800 text-xs"
             >
               {loading ? (
                 <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-red-800"></div>
               ) : (
-                <img className="h-5" src={deleteImg} alt="delete" />
+                <img className="h-6" src={deleteImg} alt="delete" />
               )}
             </button>
           )}
@@ -186,7 +188,7 @@ const AddCategory = ({ user, category, setAdding }) => {
       </div>
 
       {/* Category Form */}
-      <div className="flex flex-col items-center mt-10 w-full flex-1">
+      <div className="flex flex-col items-center mt-16 w-full flex-1">
         <input
           onChange={(e) => setCatImage(e.target.files[0])}
           type="file"
@@ -198,9 +200,9 @@ const AddCategory = ({ user, category, setAdding }) => {
           <img
             src={
               catImage
-                ? category
-                  ? catImage
-                  : URL.createObjectURL(catImage)
+                ? catImage?.name
+                  ? URL.createObjectURL(catImage)
+                  : catImage
                 : placeHolder
             }
             alt="placeHolder"

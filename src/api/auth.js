@@ -60,9 +60,8 @@ const useAuth = () => {
       localStorage.setItem("user", JSON.stringify(userData));
       setDbUser(userData);
     } catch (error) {
-      console.error("Error signing in:", error);
-    } finally {
       setLoading(false);
+      console.error("Error signing in:", error);
     }
   };
 

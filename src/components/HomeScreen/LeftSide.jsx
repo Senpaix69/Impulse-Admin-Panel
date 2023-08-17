@@ -1,20 +1,13 @@
 import React from "react";
-import appLogo from "../../assets/images/app_logo.png";
 import { Link, useLocation } from "react-router-dom";
+import AppLogo from "../common/AppLogo";
 
 const LeftSide = ({ setIsSignOut }) => {
   const location = useLocation();
 
   return (
     <div className="h-full w-full p-2 pt-4 bg-white shadow-md flex flex-col gap-4">
-      <div className="flex items-center border-b justify-center border-gray-200 pb-4">
-        <img
-          className="w-12 h-12 rounded-full p-[1.4px] border-2 border-red-800"
-          src={appLogo}
-          alt="applogo"
-        />
-        <p className="ml-2 text-2xl font-bold text-red-800">Impulse</p>
-      </div>
+      <AppLogo />
 
       {/* Tiles */}
       <div className="flex-1 flex flex-col">

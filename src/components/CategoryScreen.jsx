@@ -35,10 +35,8 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
   };
 
   useEffect(() => {
-    if (!editCategory) {
-      getCategories();
-    }
-  }, [editCategory]);
+    if (!adding) getCategories();
+  }, [adding]);
 
   return editCategory ? (
     <AddCategory user={user} category={editCategory} setAdding={setAdding} />
@@ -46,8 +44,8 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
     <AddCategory user={user} setAdding={setAdding} />
   ) : (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
-      <div className="absolute top-0 bg-red-800 z-10 w-full p-2 flex item-center justify-between text-xl font-bold text-white">
-        <p className="ml-12 md:ml-0">Categories</p>
+      <div className="absolute top-0 bg-red-800 z-10 w-full p-2 px-3 flex item-center justify-between text-xl font-bold text-white">
+        <p className="ml-12 md:ml-0 my-auto">Categories</p>
         <button
           onClick={() => {
             setAddCategory(true);
@@ -55,7 +53,7 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
           }}
         >
           <img
-            className="p-2 h-8 bg-white rounded-full cursor-pointer"
+            className="p-2 h-9 bg-white rounded-full cursor-pointer"
             src={addImg}
             alt="category"
           />
@@ -75,7 +73,11 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
           return (
             <div
               key={index}
-              className="col-span-1 relative h-56 flex flex-col bg-white rounded-sm gap-2 items-center justify-center p-4"
+              onClick={() => {
+                setEditCategory(category);
+                setAdding(true);
+              }}
+              className="col-span-1 relative h-56 cursor-pointer flex flex-col bg-white rounded-md gap-2 items-center justify-center p-4 shadow-sm hover:shadow-md"
             >
               <img
                 className="h-40"
@@ -83,15 +85,6 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
                 alt="categoryImage"
               />
               <p className="text-xs md:text-sm">{category.title}</p>
-              <button
-                onClick={() => {
-                  setEditCategory(category);
-                  setAdding(true);
-                }}
-                className="absolute top-2 right-2"
-              >
-                <img className="h-5" src={edit} alt="edit" />
-              </button>
             </div>
           );
         })}
