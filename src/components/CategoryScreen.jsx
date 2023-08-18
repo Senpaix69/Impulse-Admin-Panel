@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import emptyImg from "../assets/images/nothing.png";
 import addImg from "../assets/images/add.png";
+import Search from "./common/Search";
 import Loader from "./common/Loader";
 import host from "../consts/auth_consts";
 import { GET_ALL_CATEGORIES } from "../consts/api_consts";
@@ -44,20 +45,23 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
     <AddCategory user={user} setAdding={setAdding} />
   ) : (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
-      <div className="absolute top-0 bg-red-800 z-10 w-full p-2 px-3 flex item-center justify-between text-xl font-bold text-white">
-        <p className="ml-12 md:ml-0 my-auto">Categories</p>
-        <button
-          onClick={() => {
-            setAddCategory(true);
-            setAdding(true);
-          }}
-        >
-          <img
-            className="p-2 h-9 bg-white rounded-full cursor-pointer"
-            src={addImg}
-            alt="category"
-          />
-        </button>
+      <div className="absolute top-0 bg-red-800 z-10 w-full p-2 px-3 flex item-center flex-col gap-2 text-xl font-bold text-white">
+        <div className="flex w-full items-center justify-between">
+          <p className="ml-12 md:ml-0 my-auto">Categories</p>
+          <button
+            onClick={() => {
+              setAddCategory(true);
+              setAdding(true);
+            }}
+          >
+            <img
+              className="p-2 h-9 bg-white rounded-full cursor-pointer"
+              src={addImg}
+              alt="category"
+            />
+          </button>
+        </div>
+        <Search />
       </div>
 
       {loading && <Loader />}

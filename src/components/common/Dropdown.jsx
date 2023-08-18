@@ -23,7 +23,7 @@ const Dropdown = ({ list, selected, onChange, position }) => {
         <button
           ref={dropdownRef}
           onClick={() => setOpen(!open)}
-          className={`absolute flex px-3 items-center text-xs md:text-sm font-normal justify-center gap-2 bg-red-800 h-10 top-16 shadow-md rounded-md ${position}`}
+          className="relative flex px-3 items-center text-xs md:text-sm font-normal justify-center gap-2 h-10 shadow-md rounded-md"
         >
           <p>{selected.title ?? "Select"}</p>
           <svg
@@ -42,7 +42,7 @@ const Dropdown = ({ list, selected, onChange, position }) => {
       )}
       {open && (
         <div
-          className={`absolute flex text-xs md:text-sm flex-col text-black font-normal items-start top-28 bg-white shadow-md gap-1 rounded-md min-w-[100px] ${position}`}
+          className={`absolute flex text-xs md:text-sm flex-col text-black font-normal items-start top-[138px] bg-gray-100 shadow-xl overflow-hidden gap-1 rounded-md min-w-[100px] ${position}`}
         >
           {list.map((item) => (
             <button

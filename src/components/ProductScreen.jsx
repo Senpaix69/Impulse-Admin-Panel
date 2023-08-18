@@ -7,6 +7,7 @@ import AddProduct from "./AddProduct";
 import { GET_ALL_CATEGORIES, GET_ALL_ITEMS } from "../consts/api_consts";
 import axios from "axios";
 import Dropdown from "./common/Dropdown";
+import Search from "./common/Search";
 
 const ProductScreen = ({ adding, setAdding, user }) => {
   const [products, setProducts] = useState([]);
@@ -83,35 +84,40 @@ const ProductScreen = ({ adding, setAdding, user }) => {
     <AddProduct user={user} setAdding={setAdding} />
   ) : (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
-      <div className="absolute top-0 z-10 bg-red-800 w-full p-2 px-3 flex item-center justify-between text-xl font-bold text-white">
-        <p className="ml-12 md:ml-0 my-auto">Products</p>
-        <button
-          onClick={() => {
-            setAddProduct(true);
-            setAdding(true);
-          }}
-        >
-          <img
-            className="p-2 h-9 bg-white rounded-full cursor-pointer"
-            src={addImg}
-            alt="category"
-          />
-        </button>
+      <div className="absolute top-0 bg-red-800 z-10 w-full p-2 px-3 flex item-center flex-col gap-2 text-xl font-bold text-white">
+        <div className="flex w-full items-center justify-between">
+          <p className="ml-12 md:ml-0 my-auto">Products</p>
+          <button
+            onClick={() => {
+              setAddProduct(true);
+              setAdding(true);
+            }}
+          >
+            <img
+              className="p-2 h-9 bg-white rounded-full cursor-pointer"
+              src={addImg}
+              alt="category"
+            />
+          </button>
+        </div>
+        <Search />
 
         {/* DropDowns Menu */}
-        <Dropdown
-          position={"right-4"}
-          list={categories}
-          selected={selectedCategory}
-          onChange={(value) => handleCategoryClick(value)}
-        />
+        <div className="flex items-center justify-between">
+          <Dropdown
+            position={"left-4"}
+            list={categories}
+            selected={selectedCategory}
+            onChange={(value) => handleCategoryClick(value)}
+          />
 
-        <Dropdown
-          position={"left-4"}
-          list={selectedCategory?.subcategories}
-          selected={selectedSubCategory}
-          onChange={(value) => handleSubCategoryClick(value)}
-        />
+          <Dropdown
+            position={"right-4"}
+            list={selectedCategory?.subcategories}
+            selected={selectedSubCategory}
+            onChange={(value) => handleSubCategoryClick(value)}
+          />
+        </div>
       </div>
       {loading && <Loader />}
 
@@ -122,7 +128,7 @@ const ProductScreen = ({ adding, setAdding, user }) => {
       )}
 
       {categories.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 mt-10 gap-4 px-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 mt-[132px] gap-4 px-2">
           {/* Product List */}
           {categories.map((category, index) => {
             return (

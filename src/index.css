@@ -13,4 +13,10 @@ input {
   width: 100%;
   padding: 6px;
   border-radius: 6px;
+  color: black;
+  font-size: small;
+  font-weight: normal;
+  outline: none;
 }
+
+
