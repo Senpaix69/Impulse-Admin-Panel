@@ -83,7 +83,7 @@ const ProductScreen = ({ adding, setAdding, user }) => {
     <AddProduct user={user} setAdding={setAdding} />
   ) : (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
-      <div className="absolute top-0 z-20 bg-red-800 w-full p-2 px-3 flex item-center justify-between text-xl font-bold text-white">
+      <div className="absolute top-0 z-10 bg-red-800 w-full p-2 px-3 flex item-center justify-between text-xl font-bold text-white">
         <p className="ml-12 md:ml-0 my-auto">Products</p>
         <button
           onClick={() => {
@@ -115,13 +115,13 @@ const ProductScreen = ({ adding, setAdding, user }) => {
       </div>
       {loading && <Loader />}
 
-      {products.length === 0 && (
+      {categories.length === 0 && (
         <div className="flex w-full h-full items-center justify-center">
           <img className="h-72" src={emptyImg} alt="empty" />
         </div>
       )}
 
-      {products.length > 0 && (
+      {categories.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 mt-10 gap-4 px-2">
           {/* Product List */}
           {categories.map((category, index) => {
