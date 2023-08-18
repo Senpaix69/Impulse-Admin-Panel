@@ -53,6 +53,8 @@ const compressFile = async (file) => {
     const compressedFile = await new Promise((resolve, reject) => {
       new Compressor(file, {
         quality: 0.8,
+        maxWidth: 800,
+        maxHeight: 800,
         success(result) {
           resolve(result);
         },

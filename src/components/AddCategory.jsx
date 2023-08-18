@@ -75,8 +75,7 @@ const AddCategory = ({ user, category, setAdding }) => {
       equalArrays(subCategories, category.subcategories) &&
       catTitle.toLocaleLowerCase().trim() ===
         category.title.toLocaleLowerCase().trim() &&
-      catImage.toLocaleLowerCase().trim() ===
-        category.imageUrl.toLocaleLowerCase().trim()
+      catImage === category.imageUrl
     ) {
       if (isEditing) setIsEditing(false);
       return;
@@ -103,6 +102,9 @@ const AddCategory = ({ user, category, setAdding }) => {
 
       let imageUrl;
       if (!category || catImage !== category?.imageUrl) {
+        if (category?.imageUrl) {
+          await deleteImage(category.imageUrl);
+        }
         const uploadResult = await uploadFile(
           catImage,
           `categories/${user._id}/${catImage.name}`,
@@ -166,7 +168,7 @@ const AddCategory = ({ user, category, setAdding }) => {
               disabled={loading}
               className="p-1 bg-white h-9 w-9 rounded-full flex items-center justify-center gap-2 text-red-800 text-xs"
             >
-              {loading ? (
+              {pageTitle.includes("Deleting") && loading ? (
                 <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-red-800"></div>
               ) : (
                 <img className="h-6 p-[2px]" src={deleteImg} alt="delete" />
@@ -179,7 +181,7 @@ const AddCategory = ({ user, category, setAdding }) => {
               onClick={saveCategory}
               className="py-1 h-8 w-20 bg-white rounded-md flex items-center justify-center gap-2 text-red-800 text-xs"
             >
-              {!category && loading ? (
+              {pageTitle.includes("Saving") && loading ? (
                 <>
                   <p>{status}%</p>
                   <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-red-800"></div>
