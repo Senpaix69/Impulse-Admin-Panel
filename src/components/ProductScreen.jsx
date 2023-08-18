@@ -75,13 +75,21 @@ const ProductScreen = ({ adding, setAdding, user }) => {
   };
 
   useEffect(() => {
-    if (!adding) getCategories();
+    if (!adding) {
+      getCategories();
+      getProducts();
+    }
   }, [adding]);
 
   return editProduct ? (
-    <AddProduct user={user} setAdding={setAdding} />
+    <AddProduct
+      user={user}
+      product={editProduct}
+      setAdding={setAdding}
+      categories={categories}
+    />
   ) : addProduct ? (
-    <AddProduct user={user} setAdding={setAdding} />
+    <AddProduct user={user} setAdding={setAdding} categories={categories} />
   ) : (
     <div className="h-full bg-gray-100 py-5 overflow-y-scroll scrollbar-none">
       <div className="absolute top-0 bg-red-800 z-10 w-full p-2 px-3 flex item-center flex-col gap-2 text-xl font-bold text-white">
@@ -121,31 +129,27 @@ const ProductScreen = ({ adding, setAdding, user }) => {
       </div>
       {loading && <Loader />}
 
-      {categories.length === 0 && (
+      {products.length === 0 && (
         <div className="flex w-full h-full items-center justify-center">
           <img className="h-72" src={emptyImg} alt="empty" />
         </div>
       )}
 
-      {categories.length > 0 && (
+      {products.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 mt-[132px] gap-4 px-2">
           {/* Product List */}
-          {categories.map((category, index) => {
+          {products.map((product, index) => {
             return (
               <div
                 key={index}
                 onClick={() => {
-                  setEditProduct(category);
+                  setEditProduct(product);
                   setAdding(true);
                 }}
                 className="col-span-1 relative h-56 cursor-pointer flex flex-col bg-white rounded-md gap-2 items-center justify-center p-4 shadow-sm hover:shadow-md"
               >
-                <img
-                  className="h-40"
-                  src={category.imageUrl}
-                  alt="categoryImage"
-                />
-                <p className="text-xs md:text-sm">{category.title}</p>
+                <img className="h-40" src={product.image} alt="productImage" />
+                <p className="text-xs md:text-sm">{product.title}</p>
               </div>
             );
           })}

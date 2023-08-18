@@ -72,7 +72,7 @@ const CategoryScreen = ({ user, setAdding, adding }) => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 mt-10 gap-4 px-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 mt-[84px] gap-4 px-2">
         {categories.map((category, index) => {
           return (
             <div

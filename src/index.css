@@ -9,7 +9,7 @@
   font-family: sans-serif;
 }
 
-input {
+input, textarea {
   width: 100%;
   padding: 6px;
   border-radius: 6px;

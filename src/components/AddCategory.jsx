@@ -21,7 +21,7 @@ const AddCategory = ({ user, category, setAdding }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [pageTitle, setPageTitle] = useState("Add Category");
   const [subCategories, setSubCategories] = useState([]);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState(0);
   const [showDelete, setShowDelete] = useState(false);
   const ref = useRef();
 

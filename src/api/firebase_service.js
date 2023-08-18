@@ -19,7 +19,7 @@ const uploadFile = async (file, path, setStatus) => {
           const percent = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          setStatus(percent);
+          if (setStatus) setStatus(percent);
         },
         (err) => {
           reject(err);
