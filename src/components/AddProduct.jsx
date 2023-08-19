@@ -186,7 +186,7 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
           if (image.name) {
             result = await uploadFile(
               image,
-              `items/${selectedCategory._id}_${selectedCategory.title}/${user._id}/${image.name}`
+              `items/${selectedCategory._id}/${user._id}/${image.name}`
             );
           }
           const statusPercentage = ((index + 1) / images.length) * 100;
