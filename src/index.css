@@ -9,7 +9,8 @@
   font-family: sans-serif;
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   padding: 6px;
   border-radius: 6px;
@@ -19,4 +20,16 @@ input, textarea {
   outline: none;
 }
 
-
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../src/assets/images/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.3;
+  z-index: -1;
+}
