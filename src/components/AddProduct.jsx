@@ -387,7 +387,7 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
             )}
           </div>
 
-          <div className="flex flex-col w-full bg-white shadow-md gap-2 p-10 mt-6">
+          <div className="flex flex-col w-full bg-white shadow-md gap-2 p-6 md:p-10 mt-6">
             <h1 className="m-auto text-red-800 font-bold">Product Details *</h1>
             <CustomInput
               title={"Title"}
