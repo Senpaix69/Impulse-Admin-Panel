@@ -22,6 +22,7 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
   const [loading, setLoading] = useState(false);
   const [loader, setLoader] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [errImgs, setErrImgs] = useState([]);
   const [isEditing, setIsEditing] = useState(true);
   const [productDetail, setProductDetails] = useState(null);
   const [status, setStatus] = useState(0);
@@ -195,6 +196,8 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
         })
       );
 
+      setErrImgs(imagesUrl);
+
       const colorsRgba = colors.map((color) => {
         if (color.startsWith("#")) {
           return hexToInt(color);
@@ -229,6 +232,9 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
       }
       setAdding(false);
     } catch (e) {
+      errImgs.forEach(async (image) => {
+        if (!image.name) await deleteImage(image);
+      });
       alert(`Error: ${e.message}`);
     } finally {
       setPageTitle(product ? "Edit Product" : "Add Product");
