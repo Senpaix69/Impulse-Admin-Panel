@@ -156,7 +156,7 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
 
   const checkIsEditing = () => {
     const isContentEqual =
-      product.images &&
+      product?.images &&
       equalArrays(images, product.images) &&
       equalArrays(colors, product.colors) &&
       title.trim().toLowerCase() === product.title.trim().toLowerCase() &&
