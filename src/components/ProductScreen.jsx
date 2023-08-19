@@ -77,6 +77,7 @@ const ProductScreen = ({ adding, setAdding, user }) => {
   useEffect(() => {
     if (!adding) {
       getCategories();
+      if(categories) getProducts();
     }
   }, [adding]);
 

@@ -189,7 +189,8 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
             );
           }
           const statusPercentage = ((index + 1) / images.length) * 100;
-          setStatus(statusPercentage);
+          setStatus(statusPercentage.toFixed(1));
+
           return image.name ? result.url : image;
         })
       );
@@ -203,7 +204,7 @@ const AddProduct = ({ user, product, setAdding, categories }) => {
       });
 
       const requestData = {
-        _id: product.itemId,
+        _id: product?.itemId,
         title,
         images: imagesUrl,
         rating: 0.0,
