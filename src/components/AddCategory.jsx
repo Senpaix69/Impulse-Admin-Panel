@@ -197,6 +197,7 @@ const AddCategory = ({ user, category, setAdding }) => {
       {/* Category Form */}
       <div className="flex flex-col items-center mt-16 w-full flex-1">
         <input
+          name="imageFile"
           onChange={(e) => setCatImage(e.target.files[0])}
           type="file"
           accept="image/*"
@@ -226,6 +227,7 @@ const AddCategory = ({ user, category, setAdding }) => {
         <div className="flex flex-col w-full bg-white shadow-md gap-1 p-10 mt-6">
           <h1 className="text-red-800 font-bold">Title</h1>
           <input
+            name="title"
             disabled={loading}
             onChange={(e) => setCatTitle(e.target.value)}
             value={catTitle}
@@ -235,6 +237,7 @@ const AddCategory = ({ user, category, setAdding }) => {
           />
           <div className="flex mt-2 gap-2 justify-center">
             <input
+              name="subcat"
               disabled={loading}
               value={subCat}
               onChange={(e) => setSubCat(e.target.value)}

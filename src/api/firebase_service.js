@@ -42,7 +42,9 @@ const uploadFile = async (file, path, setStatus) => {
 const deleteImage = async (imageUrl) => {
   const imageRef = ref(storage, imageUrl);
   try {
-    await deleteObject(imageRef);
+    if (imageRef.fullPath) {
+      await deleteObject(imageRef);
+    }
   } catch (error) {
     throw new Error("Could not delete image");
   }
